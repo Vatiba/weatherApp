@@ -1,12 +1,20 @@
 import axios from 'axios';
 import { appid } from '../constants';
-import { CityWeatherType, LocationsType } from '../types';
+import { CityWeatherHourlyType, CityWeatherType, LocationsType } from '../types';
 
 const apiEndPoint = (parameter: {
    cityName: string
    appid: string
 }) => {
    return `https://api.openweathermap.org/data/2.5/weather?q=${parameter.cityName}&appid=${parameter.appid}`
+}
+
+const apiEndPointHourly = (parameter: {
+   lon: number,
+   lat: number,
+   appid: string
+}) => {
+   return `https://api.openweathermap.org/data/2.5/forecast?lat=${parameter.lat}&lon=${parameter.lon}&appid=${parameter.appid}`
 }
 
 const searchApiEndPoint = (parameter: {
@@ -35,7 +43,16 @@ const getWeather = async (cityName: string) => {
    }))
 }
 
+const getWeatherHourly = async (lon: number, lat: number) => {
+   return axios.get<CityWeatherHourlyType>(apiEndPointHourly({
+      appid: appid,
+      lon,
+      lat,
+   }))
+}
+
 export {
    getWeather,
-   getLocations
+   getLocations,
+   getWeatherHourly
 };
