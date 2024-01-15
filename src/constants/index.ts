@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native';
+
 import Heavyrain from '../assets/images/heavyrain.png';
 import Moderaterain from '../assets/images/moderaterain.png';
 import Snow from '../assets/images/snow.png';
@@ -5,17 +7,25 @@ import Mist from '../assets/images/mist.png';
 import Sun from '../assets/images/sun.png';
 import Partlycloudy from '../assets/images/partlycloudy.png';
 import Cloud from '../assets/images/cloud.png';
-import { ImageSourcePropType } from 'react-native';
+
+import CloudBg from '../assets/gif/cloud.jpg';
+import RainBg from '../assets/gif/rain.jpg';
+import SnowBg from '../assets/gif/snow.jpg';
+import SunBg from '../assets/gif/sun.jpg';
 
 const appid = 'be7e9a9c61fecdb8c9e38ac53feedc27';
 
 const weatherImage: { [key in string]: ImageSourcePropType } = {
    '11d': Heavyrain,
+   '11n': Heavyrain,
    '09d': Heavyrain,
+   '09n': Heavyrain,
    '10d': Moderaterain,
+   '10n': Moderaterain,
    '13d': Snow,
    '13n': Snow,
    '50d': Mist,
+   '50n': Mist,
    '01d': Sun,
    '01n': Sun,
    '02d': Partlycloudy,
@@ -24,6 +34,27 @@ const weatherImage: { [key in string]: ImageSourcePropType } = {
    '03n': Cloud,
    '04d': Cloud,
    '04n': Cloud
+}
+
+const weatherImageBackground: { [key in string]: ImageSourcePropType } = {
+   '11d': RainBg,
+   '11n': RainBg,
+   '09d': RainBg,
+   '09n': RainBg,
+   '10d': RainBg,
+   '10n': RainBg,
+   '13d': SnowBg,
+   '13n': SnowBg,
+   '50d': CloudBg,
+   '50n': CloudBg,
+   '01d': SunBg,
+   '01n': SunBg,
+   '02d': SunBg,
+   '02n': SunBg,
+   '03d': CloudBg,
+   '03n': CloudBg,
+   '04d': CloudBg,
+   '04n': CloudBg
 }
 
 const countryCodes: { [key in string]: string } = {
@@ -281,5 +312,6 @@ const countryCodes: { [key in string]: string } = {
 export {
    appid,
    weatherImage,
-   countryCodes
+   countryCodes,
+   weatherImageBackground
 }

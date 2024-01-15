@@ -29,7 +29,7 @@ import { MapPinIcon } from 'react-native-heroicons/solid';
 import { getWeather, getLocations, getWeatherHourly } from '../services';
 import { CityWeatherHourlyType, CityWeatherType, DailyWeather, LocationsType } from '../types';
 import { getAveragefromEachDate, getCelsiusFromKelvin, getData, storeData } from '../helpers';
-import { countryCodes, weatherImage } from '../constants';
+import { countryCodes, weatherImage, weatherImageBackground } from '../constants';
 import dayjs from 'dayjs';
 
 
@@ -83,6 +83,7 @@ const HomeScreen = () => {
 	const getMyWeatherData = async () => {
 		let myCity = await getData('city');
 		let cityName = 'Ashgabat';
+		console.log(myCity)
 		if (myCity) cityName = myCity;
 		getWeather(cityName).then(response => {
 			setWeather(response.data);
@@ -99,18 +100,26 @@ const HomeScreen = () => {
 	return (
 		<View className='flex-1 relative'>
 			<StatusBarExpo style='light' />
-			{/* <KeyboardAvoidingView
-				behavior={Platform.OS == "ios" ? "padding" : "height"}
-				keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 40}
-				enabled={Platform.OS === "ios"}
-				className='h-full'
-			> */}
-			<ScrollView>
-				<Image
-					blurRadius={70}
-					source={BgImage}
-					className='absolute h-full w-full'
-				/>
+			<ScrollView
+				contentContainerStyle={{ flexGrow: 1 }}
+			>
+				{
+					weather ?
+						<Image
+							blurRadius={10}
+							source={
+								weatherImageBackground?.[weather.weather?.[0].icon] ||
+								BgImage
+							}
+							className='absolute h-full w-full'
+						/>
+						:
+						<Image
+							blurRadius={70}
+							source={BgImage}
+							className='absolute h-full w-full'
+						/>
+				}
 				{/* <SafeAreaView style={styles.AndroidSafeArea}> */}
 				{
 					!loading ?
@@ -144,7 +153,7 @@ const HomeScreen = () => {
 								{
 									locations?.data?.length && toggleSearchbar ?
 										<View
-											className='absolute w-full bg-gray-300 top-16 rounded-3xl'
+											className='absolute w-full bg-gray-400 top-16 rounded-3xl'
 										>
 											{
 												locations.data.map((loc, index) => {
@@ -180,7 +189,7 @@ const HomeScreen = () => {
 											{
 												weather.name
 											}
-											<Text className='text-lg font-semibold text-gray-300'>
+											<Text className='text-lg font-semibold text-gray-100'>
 												{
 													`, ${countryCodes?.[weather.sys.country]}` || ''
 												}
@@ -215,7 +224,7 @@ const HomeScreen = () => {
 													className='w-6 h-6 mr-2'
 												/>
 												<View className='flex-col'>
-													<Text className='text-gray-300 text-sm'>Wind speed</Text>
+													<Text className='text-gray-100 text-sm'>Wind speed</Text>
 													<Text className='text-white text-base'>{weather.wind.speed}m/s</Text>
 												</View>
 											</View>
@@ -225,7 +234,7 @@ const HomeScreen = () => {
 													className='w-6 h-6 mr-2'
 												/>
 												<View className='flex-col'>
-													<Text className='text-gray-300 text-sm'>Humidity</Text>
+													<Text className='text-gray-100 text-sm'>Humidity</Text>
 													<Text className='text-white text-base'>{weather.main.humidity}%</Text>
 												</View>
 											</View>
@@ -251,7 +260,7 @@ const HomeScreen = () => {
 																className='w-14 h-14'
 															/>
 														</View>
-														<Text className='text-gray-300 text-base'>
+														<Text className='text-gray-100 text-base'>
 															{
 																dayjs(item.dt_txt, 'YYYY-MM-DD HH:mm:ss').format('HH:mm') || ''
 															}
@@ -291,7 +300,7 @@ const HomeScreen = () => {
 																			className='w-14 h-14'
 																		/>
 																	</View>
-																	<Text className='text-gray-300 text-base'>
+																	<Text className='text-gray-100 text-base'>
 																		{
 																			dayjs(item.key, 'YYYY-MM-DD HH:mm:ss').format('ddd') || ''
 																		}
@@ -325,7 +334,6 @@ const HomeScreen = () => {
 				}
 				{/* </SafeAreaView> */}
 			</ScrollView>
-			{/* </KeyboardAvoidingView> */}
 		</View>
 	)
 }
