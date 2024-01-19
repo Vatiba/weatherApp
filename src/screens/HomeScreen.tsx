@@ -60,8 +60,11 @@ const HomeScreen = () => {
 			getWeather(cityName).then((response) => {
 				setWeather(response.data);
 				storeData('city', cityName);
+				getWeatherHourly(response.data.coord.lon, response.data.coord.lat).then(response => {
+					setHourlyWeather(response.data.list);
+					setDailyWeather(getAveragefromEachDate(response.data.list || []));
+				}).finally(() => setLoading(false));
 			}).finally(() => {
-				setLoading(false);
 				setToggleSearchbar(false);
 				setLocations(undefined);
 			}).catch(error => {
@@ -94,6 +97,16 @@ const HomeScreen = () => {
 			}).finally(() => setLoading(false));
 		}).catch(error => {
 			console.log(error);
+			// if there is wrong name of city in storage it will change name of city and retry request
+			cityName = 'Ashgabat';
+			getWeather(cityName).then(response => {
+				setWeather(response.data);
+				storeData('city', cityName);
+				getWeatherHourly(response.data.coord.lon, response.data.coord.lat).then(response => {
+					setHourlyWeather(response.data.list);
+					setDailyWeather(getAveragefromEachDate(response.data.list || []));
+				}).finally(() => setLoading(false));
+			})
 		});
 	}
 
@@ -106,7 +119,7 @@ const HomeScreen = () => {
 				{
 					weather ?
 						<Image
-							blurRadius={10}
+							blurRadius={1}
 							source={
 								weatherImageBackground?.[weather.weather?.[0].icon] ||
 								BgImage
