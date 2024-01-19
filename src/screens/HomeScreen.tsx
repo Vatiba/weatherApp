@@ -119,7 +119,7 @@ const HomeScreen = () => {
 				{
 					weather ?
 						<Image
-							blurRadius={1}
+							blurRadius={2.5}
 							source={
 								weatherImageBackground?.[weather.weather?.[0].icon] ||
 								BgImage

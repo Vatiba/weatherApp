@@ -37,7 +37,6 @@ const storeData = async (key: string, value: any) => {
 };
 
 const getAveragefromEachDate = (weatherData: CityWeatherHourlyType['list']): DailyWeather => {
-
    // Create an object to store average temperatures and icons for each date
    const averageData: { [key: string]: { averageTemp: number; mostCommonIcon: string; iconCounts: { [key: string]: number } } } = {};
 
@@ -81,7 +80,11 @@ const getAveragefromEachDate = (weatherData: CityWeatherHourlyType['list']): Dai
 
    // Calculate the average temperature and most common icon for each date
    for (const date in averageData) {
-      averageData[date].averageTemp /= Object.keys(averageData[date].iconCounts).length;
+      const totalTemps = Object.keys(averageData[date].iconCounts).reduce((sum, icon) => {
+         return sum + averageData[date].iconCounts[icon];
+      }, 0);
+
+      averageData[date].averageTemp /= totalTemps;
 
       averageData[date] = {
          averageTemp: parseFloat(averageData[date].averageTemp.toFixed(2)), // Round to 2 decimal places
