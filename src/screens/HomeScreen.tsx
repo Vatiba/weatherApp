@@ -31,6 +31,9 @@ import { CityWeatherHourlyType, CityWeatherType, DailyWeather, LocationsType } f
 import { getAveragefromEachDate, getCelsiusFromKelvin, getData, storeData } from '../helpers';
 import { countryCodes, weatherImage, weatherImageBackground } from '../constants';
 import dayjs from 'dayjs';
+import 'dayjs/locale/tk'
+
+dayjs.locale('tk');
 
 
 const HomeScreen = () => {
@@ -146,7 +149,7 @@ const HomeScreen = () => {
 									className='flex-row justify-end items-center rounded-full'
 								>
 									<TextInput
-										placeholder='Search city'
+										placeholder='Şäher gözle...'
 										placeholderTextColor='lightgray'
 										className='pl-6 h-10 flex-1 text-base text-white'
 										onChangeText={value => setSearch(value)}
@@ -237,7 +240,7 @@ const HomeScreen = () => {
 													className='w-6 h-6 mr-2'
 												/>
 												<View className='flex-col'>
-													<Text className='text-gray-100 text-sm'>Wind speed</Text>
+													<Text className='text-gray-100 text-sm'>Ýel tizligi</Text>
 													<Text className='text-white text-base'>{weather.wind.speed}m/s</Text>
 												</View>
 											</View>
@@ -247,14 +250,14 @@ const HomeScreen = () => {
 													className='w-6 h-6 mr-2'
 												/>
 												<View className='flex-col'>
-													<Text className='text-gray-100 text-sm'>Humidity</Text>
+													<Text className='text-gray-100 text-sm'>Howa çyglygy</Text>
 													<Text className='text-white text-base'>{weather.main.humidity}%</Text>
 												</View>
 											</View>
 										</View>
 
 										<Text className='font-bold text-white text-lg tracking-widest my-3 mt-6'>
-											Hourly
+											Sagatlaýyn
 										</Text>
 										<FlatList
 											keyExtractor={(item, i) => item.dt_txt}
@@ -291,7 +294,7 @@ const HomeScreen = () => {
 											dailyWeather ?
 												<>
 													<Text className='font-bold text-white text-lg tracking-widest my-3 mt-6'>
-														Daily
+														Günleýin
 													</Text>
 													<FlatList
 														keyExtractor={(item, i) => item.key}
@@ -315,7 +318,7 @@ const HomeScreen = () => {
 																	</View>
 																	<Text className='text-gray-100 text-base'>
 																		{
-																			dayjs(item.key, 'YYYY-MM-DD HH:mm:ss').format('ddd') || ''
+																			dayjs(item.key, 'YYYY-MM-DD HH:mm:ss').locale('tk').format('ddd') || ''
 																		}
 																	</Text>
 																	<Text className='text-white text-xl font-bold'>
@@ -335,7 +338,7 @@ const HomeScreen = () => {
 									:
 									<View className='h-full flex-row items-center justify-center'>
 										<Text className='text-white text-center text-2xl tracking-widest'>
-											Type the city name to see the forecast
+											Howa maglumatyny görmeke üçin şäher adyny ýazyň
 										</Text>
 									</View>
 							}
